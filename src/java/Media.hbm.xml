@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="evaluator.business">
+    <class name="Media" table="MEDIAS" abstract="true">
+        <id name="id" type="int" column="media_id" >
+            <generator class="native" />
+        </id>
+        <property name="title" type="java.lang.String" column="media_title" />
+        <property name="genre" type="java.lang.String" column="media_genre" />
+        <property name="score" type="double" column="media_score" />
+        <property name="release" type="java.util.Date" column="media_release" />
+    </class>
+    <joined-subclass name="Game" extends="Media" table="GAMES">
+        <key column="game_mediaID" />
+        <property name="image" type="java.lang.String" column="game_imgURL" />
+        <property name="developer" type="java.lang.String" column="game_developer" />
+        <property name="publisher" type="java.lang.String" column="game_publisher" />
+        <property name="platform" type="integer" column="game_platform" />
+    </joined-subclass>
+</hibernate-mapping>
