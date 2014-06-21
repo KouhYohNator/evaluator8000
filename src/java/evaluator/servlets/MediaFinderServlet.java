@@ -52,7 +52,7 @@ public class MediaFinderServlet extends HttpServlet {
 
 				Game foundGame = persistence.findGame(title, platform);
 
-				if(foundGame == null)
+				if(foundGame == null || !foundGame.isCompleted())
 				{
 					try {
 						foundGame = connector.findGame(title, platform);
@@ -67,7 +67,6 @@ public class MediaFinderServlet extends HttpServlet {
 				resp.getWriter().print("</p></body></html>");
 //				req.setAttribute("game", object);
 //				req.getRequestDispatcher("/showGame.jsp").forward(req, resp);
-
 			}
 			break;
 			//TODO: autres medias

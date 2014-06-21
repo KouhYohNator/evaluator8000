@@ -19,7 +19,7 @@ public class Evaluator {
 
 		try {
 			result1 = connector.findGame(title, platform).toString();
-			for(Game g : connector.searchGame(title))
+			for(Game g : connector.searchGames(title))
 			{
 				result2 += g.toString() + "\n";
 			}

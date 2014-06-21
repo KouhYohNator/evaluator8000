@@ -2,13 +2,14 @@ package evaluator.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 
@@ -22,11 +23,14 @@ public class MediaSearcherServlet extends HttpServlet {
 
 	private MetacriticAPIConnector connector;
 	private PersistenceManager persistence;
-
+	
+	private HashMap<String, Long> searchCache;
+	
 	@Override
 	public void init() throws ServletException {
 		this.connector = MetacriticAPIConnector.getInstance();
 		this.persistence = PersistenceManager.getInstance();
+		this.searchCache = new HashMap<String, Long>();
 	}
 
 	@Override
@@ -49,18 +53,30 @@ public class MediaSearcherServlet extends HttpServlet {
 			if(req.getParameterMap().containsKey("title"))
 			{
 				String title = req.getParameter("title");
-
-				ArrayList<Game> foundGames = persistence.searchGames(title);
-
-				if(foundGames == null)
+				long currentTime = System.currentTimeMillis();
+				
+				ArrayList<Game> foundGames = null;
+				
+				if(searchCache.containsKey(title) && 
+						(currentTime - searchCache.get(title) < 86400000))
+				{
+					foundGames = persistence.searchGames(title);
+				}
+				else
 				{
 					try {
-						foundGames = connector.searchGame(title);
-						JSONObject object = new JSONObject(foundGames.toArray());
-						req.setAttribute("gameList", object);
-						req.getRequestDispatcher("/showGameList.jsp").forward(req, resp);
+						foundGames = connector.searchGames(title);
+						persistence.saveGames(foundGames);
+						searchCache.put(title, currentTime);
 					} catch (UnirestException e) { e.printStackTrace(); }
 				}
+				
+				JSONArray object = new JSONArray(foundGames.toArray());
+				resp.getWriter().print("<html><body><p>");
+				resp.getWriter().print(object.toString());
+				resp.getWriter().print("</p></body></html>");
+//				req.setAttribute("gameList", object);
+//				req.getRequestDispatcher("/showGameList.jsp").forward(req, resp);
 			}
 			break;
 			//TODO: autres medias

@@ -10,6 +10,7 @@
         <property name="genre" type="java.lang.String" column="media_genre" />
         <property name="score" type="double" column="media_score" />
         <property name="release" type="java.util.Date" column="media_release" />
+        <property name="completed" type="boolean" column="media_completed" />
     </class>
     <joined-subclass name="Game" extends="Media" table="GAMES">
         <key column="game_mediaID" />

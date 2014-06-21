@@ -22,7 +22,9 @@ public class MetacriticAPIConnector {
 	static{
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("PlayStation 3",1);
+		map.put("PS3",1);
 		map.put("Xbox 360", 2);
+		map.put("X360", 2);
 		map.put("PC", 3);
 		map.put("DS", 4);
 		map.put("PlayStation 2", 6);
@@ -40,33 +42,33 @@ public class MetacriticAPIConnector {
 		map.put("Wii U", 68410);
 		platformIdToName = Collections.unmodifiableMap(map);
 	}
-	
+
 	private static MetacriticAPIConnector _instance = null;
-	
+
 	private final String ApiURL;
 
-	
+
 	private MetacriticAPIConnector(){
 		this.ApiURL = "https://byroredux-metacritic.p.mashape.com";
 	}
-	
+
 	public static MetacriticAPIConnector getInstance()
 	{
 		if(_instance == null)
 			_instance = new MetacriticAPIConnector();
 		return _instance;
 	}
-	
+
 	public Game findGame(String title, int platform) throws UnirestException, IOException
 	{
 		HttpResponse<JsonNode> mediaJson = Unirest.post(ApiURL + "/find/game")
-				  .header("X-Mashape-Authorization", "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg")
-				  .field("title", title)
-				  .field("platform", String.valueOf(platform))
-				  .asJson();
-		
+				.header("X-Mashape-Authorization", "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg")
+				.field("title", title)
+				.field("platform", String.valueOf(platform))
+				.asJson();
+
 		JSONObject gameJson = mediaJson.getBody().getObject().getJSONObject("result");
-		
+
 		Game askedGame = new Game();
 		askedGame.setTitle(gameJson.getString("name"));
 		askedGame.setGenre(gameJson.getString("genre"));
@@ -75,35 +77,40 @@ public class MetacriticAPIConnector {
 		askedGame.setDeveloper(gameJson.getString("developer"));
 		askedGame.setPublisher(gameJson.getString("publisher"));
 		askedGame.setPlatform(platform);
-				
+		askedGame.setCompleted(true);
+
 		return askedGame;
 	}
-	
-	public ArrayList<Game> searchGame(String title) throws UnirestException, IOException
+
+	public ArrayList<Game> searchGames(String title) throws UnirestException, IOException
 	{
 		HttpResponse<JsonNode> mediaJson = Unirest.post(ApiURL + "/search/game")
-				  .header("X-Mashape-Authorization", "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg")
-				  .field("title", title)
-				  .asJson();
-		
+				.header("X-Mashape-Authorization", "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg")
+				.field("title", title)
+				.asJson();
+
 		ArrayList<Game> gameList = new ArrayList<Game>();
 		JSONArray gameListJson = mediaJson.getBody().getObject().getJSONArray("results");
-		
+
 		for(int i=0; i<gameListJson.length(); i++)
 		{
 			JSONObject gameJson = gameListJson.getJSONObject(i);
-			
+
 			Game askedGame = new Game();
 			askedGame.setTitle(gameJson.getString("name"));
 			askedGame.setRelease(Date.valueOf(gameJson.getString("rlsdate")));
 			askedGame.setPublisher(gameJson.getString("publisher"));
-			int platformID = platformIdToName.get(gameJson.getString("platform"));
+			int platformID = 0;
+			try{
+				platformID= platformIdToName.get(gameJson.getString("platform"));
+			} catch (NullPointerException e) {System.err.println("Aucun ID trouvé pour la platforme: " + gameJson.getString("platform"));}
 			askedGame.setPlatform(platformID);
-			
+			askedGame.setCompleted(false);
+
 			gameList.add(askedGame);
 		}
 
 		return gameList;
 	}
-	
+
 }

@@ -59,13 +59,13 @@ public class PersistenceManager {
 		Criteria crit = session.createCriteria(Game.class);
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Game> games = (ArrayList<Game>) crit.add(Restrictions.like("title", title));
+		ArrayList<Game> games = (ArrayList<Game>) crit.add(Restrictions.like("title", title)).list();
 		
 		tx.commit();
 		session.clear();
 		session.close();
 		
-		if(games.size() == 0)
+		if(games.isEmpty())
 			return null;
 		
 		return games;
@@ -75,7 +75,21 @@ public class PersistenceManager {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		
-		session.save(game);
+		session.saveOrUpdate(game);
+		
+		tx.commit();
+		session.clear();
+		session.close();
+	}
+
+	public void saveGames(ArrayList<Game> games) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		for(Game game: games)
+		{
+			session.saveOrUpdate(game);
+		}
 		
 		tx.commit();
 		session.clear();

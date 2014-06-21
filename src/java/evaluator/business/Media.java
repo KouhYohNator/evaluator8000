@@ -9,6 +9,7 @@ public abstract class Media {
 	private String genre;
 	private double score;
 	private Date release;
+	private boolean completed;
 	
 	public int getId() {
 		return id;
@@ -39,6 +40,12 @@ public abstract class Media {
 	}
 	public void setRelease(Date release) {
 		this.release = release;
+	}
+	public boolean isCompleted() {
+		return completed;
+	}
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 	@Override
 	public String toString() {
