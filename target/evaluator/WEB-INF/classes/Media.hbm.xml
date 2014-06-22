@@ -19,4 +19,12 @@
         <property name="publisher" type="java.lang.String" column="game_publisher" />
         <property name="platform" type="integer" column="game_platform" />
     </joined-subclass>
+    <joined-subclass name="Movie" extends="Media" table="MOVIES">
+        <key column="movie_mediaID" />
+        <property name="rating" type="java.lang.String" column="movie_rating" />
+        <property name="runtime" type="java.lang.String" column="movie_runtime" />
+        <property name="director" type="java.lang.String" column="movie_director" />
+        <property name="cast" type="java.lang.String" column="movie_cast" />
+        <property name="image" type="java.lang.String" column="movie_imgURL" />
+    </joined-subclass>
 </hibernate-mapping>

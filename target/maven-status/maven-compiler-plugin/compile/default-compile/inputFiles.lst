@@ -3,6 +3,7 @@ E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\persistence\PersistenceManag
 E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\servlets\MediaEvaluatorServlet.java
 E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\main\Evaluator.java
 E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\servlets\MediaSearcherServlet.java
+E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\business\Movie.java
 E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\business\Media.java
-E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\services\MetacriticAPIConnector.java
 E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\business\Game.java
+E:\MESDOCS-F\Workspace\evaluator\src\java\evaluator\services\MetacriticAPIConnector.java

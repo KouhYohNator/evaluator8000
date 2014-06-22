@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import evaluator.business.Game;
+import evaluator.business.Movie;
 import evaluator.services.MetacriticAPIConnector;
 
 public class Evaluator {
@@ -14,6 +15,7 @@ public class Evaluator {
 		MetacriticAPIConnector connector = MetacriticAPIConnector.getInstance();
 
 		String title = "The Elder Scrolls V: Skyrim";
+		String title2 = "Fast & Furious";
 		int platform = 1;
 		String result1 = null, result2 = "";
 
@@ -22,6 +24,10 @@ public class Evaluator {
 			for(Game g : connector.searchGames(title))
 			{
 				result2 += g.toString() + "\n";
+			}
+			for(Movie m : connector.searchMovies(title2))
+			{
+				result2 += m.toString() + "\n";
 			}
 			Unirest.shutdown();
 		} catch (UnirestException e) {

@@ -1,6 +1,5 @@
 package evaluator.services;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,8 +15,11 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import evaluator.business.Game;
+import evaluator.business.Movie;
 
 public class MetacriticAPIConnector {
+
+	// Association des identifiants de plateforme avec leur nom (Jeux)
 	private final static Map<String, Integer> platformIdToName;
 	static{
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -46,12 +48,16 @@ public class MetacriticAPIConnector {
 	private static MetacriticAPIConnector _instance = null;
 
 	private final String ApiURL;
-
+	private final String ApiKey;
 
 	private MetacriticAPIConnector(){
 		this.ApiURL = "https://byroredux-metacritic.p.mashape.com";
+		this.ApiKey = "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg";
 	}
 
+	/**
+	 * Permet d'obtenir l'unique instance du MetacriticAPIConnector
+	 */
 	public static MetacriticAPIConnector getInstance()
 	{
 		if(_instance == null)
@@ -59,10 +65,18 @@ public class MetacriticAPIConnector {
 		return _instance;
 	}
 
-	public Game findGame(String title, int platform) throws UnirestException, IOException
+	/**
+	 * Envoie une requête HTTP à l'API pour trouver un jeu à partir de son titre
+	 * et de l'identifiant de sa plateforme
+	 * @param title Le titre du jeu à trouver
+	 * @param platform La plateforme du jeu
+	 * @return Le jeu renvoyé par l'API
+	 * @throws UnirestException En cas d'erreur de communication avec le serveur
+	 */
+	public Game findGame(String title, int platform) throws UnirestException
 	{
 		HttpResponse<JsonNode> mediaJson = Unirest.post(ApiURL + "/find/game")
-				.header("X-Mashape-Authorization", "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg")
+				.header("X-Mashape-Authorization", ApiKey)
 				.field("title", title)
 				.field("platform", String.valueOf(platform))
 				.asJson();
@@ -82,10 +96,46 @@ public class MetacriticAPIConnector {
 		return askedGame;
 	}
 
-	public ArrayList<Game> searchGames(String title) throws UnirestException, IOException
+	/**
+	 * Envoie une requête HTTP à l'API pour trouver un film à partir de son titre
+	 * @param title Le titre du film à trouver
+	 * @return Le film renvoyé par l'API
+	 * @throws UnirestException En cas d'erreur de communication avec le serveur
+	 */
+	public Movie findMovie(String title) throws UnirestException
+	{
+		HttpResponse<JsonNode> mediaJson = Unirest.post(ApiURL + "/find/movie")
+				.header("X-Mashape-Authorization", ApiKey)
+				.field("title", title)
+				.asJson();
+
+		JSONObject movieJson = mediaJson.getBody().getObject().getJSONObject("result");
+
+		Movie askedMovie = new Movie();
+		askedMovie.setTitle(movieJson.getString("name"));
+		askedMovie.setRelease(Date.valueOf(movieJson.getString("rlsdate")));
+		askedMovie.setRating(movieJson.getString("rating"));
+		askedMovie.setCast(movieJson.getString("cast"));
+		askedMovie.setGenre(movieJson.getString("genre"));
+		askedMovie.setRuntime(movieJson.getString("runtime"));
+		askedMovie.setImage(movieJson.getString("thumbnail"));
+		askedMovie.setDirector(movieJson.getString("director"));
+		askedMovie.setCompleted(true);
+		
+		return askedMovie;
+	}
+
+	/**
+	 * Envoie une requête HTTP à l'API pour trouver une liste de jeu ayant
+	 * comme titre celui passé en paramètre
+	 * @param title Le titre que l'on souhaite rechercher
+	 * @return L'ensemble des jeux ayant ce titre
+	 * @throws UnirestException En cas d'erreur de communication avec le serveur
+	 */
+	public ArrayList<Game> searchGames(String title) throws UnirestException
 	{
 		HttpResponse<JsonNode> mediaJson = Unirest.post(ApiURL + "/search/game")
-				.header("X-Mashape-Authorization", "uoEANscJrkQYgn1cJ5qFWnl16ax2TCNg")
+				.header("X-Mashape-Authorization", ApiKey)
 				.field("title", title)
 				.asJson();
 
@@ -113,4 +163,40 @@ public class MetacriticAPIConnector {
 		return gameList;
 	}
 
+	/**
+	 * Envoie une requête HTTP à l'API pour trouver une liste de films ayant
+	 * un titre similaire à celui passé en paramètre
+	 * @param title Le titre que l'on souhaite rechercher
+	 * @return L'ensemble des films ayant un titre similaire
+	 * @throws UnirestException En cas d'erreur de communication avec le serveur
+	 */
+	public ArrayList<Movie> searchMovies(String title) throws UnirestException
+	{
+		HttpResponse<JsonNode> mediaJson = Unirest.post(ApiURL + "/search/movie")
+				.header("X-Mashape-Authorization", ApiKey)
+				.field("title", title)
+				.field("max_pages", "2")
+				.asJson();
+
+		ArrayList<Movie> movieList = new ArrayList<Movie>();
+		JSONArray movieListJson = mediaJson.getBody().getObject().getJSONArray("results");
+
+		for(int i=0; i<movieListJson.length(); i++)
+		{
+			JSONObject movieJson = movieListJson.getJSONObject(i);
+
+			Movie askedMovie = new Movie();
+			askedMovie.setTitle(movieJson.getString("name"));
+			askedMovie.setRelease(Date.valueOf(movieJson.getString("rlsdate")));
+			askedMovie.setRating(movieJson.getString("rating"));
+			askedMovie.setCast(movieJson.getString("cast"));
+			askedMovie.setGenre(movieJson.getString("genre"));
+			askedMovie.setRuntime(movieJson.getString("runtime"));
+			askedMovie.setCompleted(false);
+
+			movieList.add(askedMovie);
+		}
+
+		return movieList;
+	}
 }

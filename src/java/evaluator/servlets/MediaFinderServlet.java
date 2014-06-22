@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import evaluator.business.Game;
+import evaluator.business.Movie;
 import evaluator.persistence.PersistenceManager;
 import evaluator.services.MetacriticAPIConnector;
 
@@ -48,7 +49,9 @@ public class MediaFinderServlet extends HttpServlet {
 			if(req.getParameterMap().containsKey("title") && req.getParameterMap().containsKey("platform"))
 			{
 				String title = req.getParameter("title");
-				int platform = Integer.parseInt(req.getParameter("platform"));
+				int platform = 1;
+				if(!req.getParameter("platform").isEmpty())
+					platform = Integer.parseInt(req.getParameter("platform"));
 
 				Game foundGame = persistence.findGame(title, platform);
 
@@ -62,6 +65,30 @@ public class MediaFinderServlet extends HttpServlet {
 				}
 
 				JSONObject object = new JSONObject(foundGame);
+				resp.getWriter().print("<html><body><p>");
+				resp.getWriter().print(object.toString());
+				resp.getWriter().print("</p></body></html>");
+//				req.setAttribute("game", object);
+//				req.getRequestDispatcher("/showGame.jsp").forward(req, resp);
+			}
+			break;
+		case "movie":
+			if(req.getParameterMap().containsKey("title"))
+			{
+				String title = req.getParameter("title");
+
+				Movie foundMovie = persistence.findMovie(title);
+
+				if(foundMovie == null || !foundMovie.isCompleted())
+				{
+					try {
+						foundMovie = connector.findMovie(title);
+					} catch (UnirestException e) { e.printStackTrace(); }
+					
+					persistence.saveMovie(foundMovie);
+				}
+
+				JSONObject object = new JSONObject(foundMovie);
 				resp.getWriter().print("<html><body><p>");
 				resp.getWriter().print(object.toString());
 				resp.getWriter().print("</p></body></html>");
