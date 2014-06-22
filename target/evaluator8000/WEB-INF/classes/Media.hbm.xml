@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="fr.upmc.aar.evaluator8000.business">
+	<class name="Media" table="medias" abstract="true">
+		<id name="id" type="int" column="media_id">
+			<generator class="native" />
+		</id>
+		<property name="title" type="java.lang.String" column="media_title" />
+		<property name="genre" type="java.lang.String" column="media_genre" />
+		<property name="score" type="double" column="media_score" />
+		<property name="release" type="java.util.Date" column="media_release" />
+		<property name="completed" type="boolean" column="media_completed" />
+	</class>
+	<joined-subclass name="Game" extends="Media" table="games">
+		<key column="game_mediaID" />
+		<property name="image" type="java.lang.String" column="game_imgURL" />
+		<property name="developer" type="java.lang.String" column="game_developer" />
+		<property name="publisher" type="java.lang.String" column="game_publisher" />
+		<property name="platform" type="integer" column="game_platform" />
+	</joined-subclass>
+	<joined-subclass name="Movie" extends="Media" table="movies">
+		<key column="movie_mediaID" />
+		<property name="rating" type="java.lang.String" column="movie_rating" />
+		<property name="runtime" type="java.lang.String" column="movie_runtime" />
+		<property name="director" type="java.lang.String" column="movie_director" />
+		<property name="cast" type="java.lang.String" column="movie_cast" />
+		<property name="image" type="java.lang.String" column="movie_imgURL" />
+	</joined-subclass>
+</hibernate-mapping>

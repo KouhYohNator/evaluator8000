@@ -3,21 +3,21 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Projet AAR - Evaluator8000 (Arnault - Lebrument)</display-name>
+  <display-name>Projet AAR - Evaluator8000 (Arnault -Lebrument)</display-name>
   
   <servlet>
   	<servlet-name>evalServlet</servlet-name>
-  	<servlet-class>evaluator.servlets.MediaEvaluatorServlet</servlet-class>
+  	<servlet-class>fr.upmc.aar.evaluator8000.servlets.MediaEvaluatorServlet</servlet-class>
   </servlet>
   
   <servlet>
   	<servlet-name>findServlet</servlet-name>
-  	<servlet-class>evaluator.servlets.MediaFinderServlet</servlet-class>
+  	<servlet-class>fr.upmc.aar.evaluator8000.servlets.MediaFinderServlet</servlet-class>
   </servlet>
   
   <servlet>
   	<servlet-name>searchServlet</servlet-name>
-  	<servlet-class>evaluator.servlets.MediaSearcherServlet</servlet-class>
+  	<servlet-class>fr.upmc.aar.evaluator8000.servlets.MediaSearcherServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -34,5 +34,4 @@
   	<servlet-name>searchServlet</servlet-name>
   	<url-pattern>/searchMedia</url-pattern>
   </servlet-mapping>
-  
 </web-app>
