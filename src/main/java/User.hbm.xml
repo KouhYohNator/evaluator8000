@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="fr.upmc.aar.evaluator8000.business">
+	<class name="User" table="users">
+		<id name="id" type="int" column="user_id">
+			<generator class="native" />
+		</id>
+		<property name="login" type="java.lang.String" column="user_login" />
+		<property name="password" type="java.lang.String" column="user_password" />
+		<property name="active" type="boolean" column="user_isactive" />
+		<set name="comments" table="comments" inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="comment_user" not-null="false" />
+			</key>
+			<one-to-many class="Comment"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,8 +1,11 @@
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\business\Movie.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\servlets\MediaFinderServlet.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\business\Game.java
+E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\servlets\UserRegisterServlet.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\business\Media.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\servlets\MediaEvaluatorServlet.java
+E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\business\User.java
+E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\business\Comment.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\servlets\MediaSearcherServlet.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\services\MetacriticAPIConnector.java
 E:\MESDOCS-F\Workspace\evaluator8000\src\main\java\fr\upmc\aar\evaluator8000\persistence\PersistenceManager.java

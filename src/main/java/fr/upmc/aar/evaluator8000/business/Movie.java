@@ -39,11 +39,36 @@ public class Movie extends Media {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	
 	@Override
 	public String toString() {
 		return super.toString() + " \n\t Type: " 
 				+ "Movie [director=" + director + ", cast=" + cast
 				+ ", runtime=" + runtime + ", rating=" + rating + "]";
+	}
+	
+	@Override
+	public boolean equals(Object other)
+	{
+		if(this.getClass() != other.getClass())
+			return false;
+		
+		if(this == other)
+			return true;
+		
+		return ( this.title.equals(((Game)other).getTitle()) &&
+				 this.cast.equals(((Movie)other).getCast()) &&
+				 this.release.equals(((Game)other).getRelease())
+				);
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		int hash = 42 * this.title.hashCode();
+		hash += 42 * this.cast.hashCode();
+		hash += 42 * this.release.hashCode();
+		return hash;
 	}
 	
 }

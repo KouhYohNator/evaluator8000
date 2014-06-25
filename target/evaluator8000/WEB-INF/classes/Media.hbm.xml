@@ -11,6 +11,12 @@
 		<property name="score" type="double" column="media_score" />
 		<property name="release" type="java.util.Date" column="media_release" />
 		<property name="completed" type="boolean" column="media_completed" />
+		<set name="comments" table="comments" inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="comment_media" not-null="false" />
+			</key>
+			<one-to-many class="Comment"/>
+		</set>
 	</class>
 	<joined-subclass name="Game" extends="Media" table="games">
 		<key column="game_mediaID" />

@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
-
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import fr.upmc.aar.evaluator8000.business.Comment;
 import fr.upmc.aar.evaluator8000.business.Game;
 import fr.upmc.aar.evaluator8000.business.Movie;
 import fr.upmc.aar.evaluator8000.persistence.PersistenceManager;
@@ -47,7 +46,7 @@ public class MediaFinderServlet extends HttpServlet {
 		int mediaType = 0;
 		if(media.equals("game")) mediaType = 1;
 		else if(media.equals("movie")) mediaType = 2;
-		
+
 		switch(mediaType)
 		{
 		case 1:
@@ -60,21 +59,39 @@ public class MediaFinderServlet extends HttpServlet {
 
 				Game foundGame = persistence.findGame(title, platform);
 
-				if(foundGame == null || !foundGame.isCompleted())
+				if(foundGame == null)
 				{
 					try {
 						foundGame = connector.findGame(title, platform);
+					} catch (UnirestException e) { e.printStackTrace(); }
+
+					persistence.saveGame(foundGame);
+				}
+				else if(!foundGame.isCompleted())
+				{
+					try {
+						foundGame.update(connector.findGame(title, platform));
 					} catch (UnirestException e) { e.printStackTrace(); }
 					
 					persistence.saveGame(foundGame);
 				}
 
-				JSONObject object = new JSONObject(foundGame);
 				resp.getWriter().print("<html><body><p>");
-				resp.getWriter().print(object.toString());
-				resp.getWriter().print("</p></body></html>");
-//				req.setAttribute("game", object);
-//				req.getRequestDispatcher("/showGame.jsp").forward(req, resp);
+				resp.getWriter().print(foundGame.toString());
+				resp.getWriter().print("</p><br />");
+				if(foundGame.getComments() != null){
+					resp.getWriter().print("<ul>");
+					for(Comment com: foundGame.getComments())
+					{
+						resp.getWriter().print("<li> From: " + com.getUser().getLogin() +
+								" - Score: " + com.getScore() + "<br />");
+						resp.getWriter().print("<p>"+ com.getContent() + "</p></li><br />");
+					}
+					resp.getWriter().print("</ul>");
+				}
+				resp.getWriter().print("</body></html>");
+				//				req.setAttribute("game", object);
+				//				req.getRequestDispatcher("/showGame.jsp").forward(req, resp);
 			}
 			break;
 		case 2:
@@ -89,16 +106,15 @@ public class MediaFinderServlet extends HttpServlet {
 					try {
 						foundMovie = connector.findMovie(title);
 					} catch (UnirestException e) { e.printStackTrace(); }
-					
+
 					persistence.saveMovie(foundMovie);
 				}
 
-				JSONObject object = new JSONObject(foundMovie);
 				resp.getWriter().print("<html><body><p>");
-				resp.getWriter().print(object.toString());
+				resp.getWriter().print(foundMovie.toString());
 				resp.getWriter().print("</p></body></html>");
-//				req.setAttribute("game", object);
-//				req.getRequestDispatcher("/showGame.jsp").forward(req, resp);
+				//				req.setAttribute("game", object);
+				//				req.getRequestDispatcher("/showGame.jsp").forward(req, resp);
 			}
 			break;
 			//TODO: autres medias

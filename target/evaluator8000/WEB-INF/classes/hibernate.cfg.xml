@@ -14,5 +14,7 @@
 		<property name="use_sql_comments">true</property>
 		<!-- Mapping files -->
 		<mapping class="evaluator.business.Media" resource="Media.hbm.xml" />
+		<mapping class="evaluator.business.User" resource="User.hbm.xml" />
+		<mapping class="evaluator.business.Comment" resource="Comment.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import fr.upmc.aar.evaluator8000.business.Game;
@@ -77,10 +75,12 @@ public class MediaSearcherServlet extends HttpServlet {
 					} catch (UnirestException e) { e.printStackTrace(); }
 				}
 
-				JSONArray object = new JSONArray(foundGames.toArray());
-				resp.getWriter().print("<html><body><p>");
-				resp.getWriter().print(object.toString());
-				resp.getWriter().print("</p></body></html>");
+				resp.getWriter().print("<html><body><ul>");
+				for(Game game : foundGames)
+				{
+					resp.getWriter().print("<li>" + game.toString() + "</li><br />");
+				}
+				resp.getWriter().print("</ul></body></html>");
 				//				req.setAttribute("gameList", object);
 				//				req.getRequestDispatcher("/showGameList.jsp").forward(req, resp);
 			}
@@ -107,10 +107,12 @@ public class MediaSearcherServlet extends HttpServlet {
 					} catch (UnirestException e) { e.printStackTrace(); }
 				}
 
-				JSONArray object = new JSONArray(foundMovies.toArray());
-				resp.getWriter().print("<html><body><p>");
-				resp.getWriter().print(object.toString());
-				resp.getWriter().print("</p></body></html>");
+				resp.getWriter().print("<html><body><ul>");
+				for(Movie movie : foundMovies)
+				{
+					resp.getWriter().print("<li>" + movie.toString() + "</li><br />");
+				}
+				resp.getWriter().print("</ul></body></html>");
 				//				req.setAttribute("gameList", object);
 				//				req.getRequestDispatcher("/showGameList.jsp").forward(req, resp);
 			}

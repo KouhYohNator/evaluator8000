@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="fr.upmc.aar.evaluator8000.business">
+	<class name="Comment" table="comments">
+		<id name="id" type="int" column="comment_id">
+			<generator class="native" />
+		</id>
+		<many-to-one name="media" class="Media" fetch="select">
+            <column name="comment_media" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="User" fetch="select">
+            <column name="comment_user" not-null="true" />
+        </many-to-one>
+		<property name="content" type="java.lang.String" column="comment_content" />
+		<property name="score" type="double" column="comment_score" />
+	</class>
+</hibernate-mapping>

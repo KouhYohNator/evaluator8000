@@ -20,6 +20,16 @@
   	<servlet-class>fr.upmc.aar.evaluator8000.servlets.MediaSearcherServlet</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>registerServlet</servlet-name>
+  	<servlet-class>fr.upmc.aar.evaluator8000.servlets.UserRegisterServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>evaluateServlet</servlet-name>
+  	<servlet-class>fr.upmc.aar.evaluator8000.servlets.MediaEvaluatorServlet</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
   	<servlet-name>evalServlet</servlet-name>
   	<url-pattern>/evalMedia</url-pattern>
@@ -33,5 +43,15 @@
   <servlet-mapping>
   	<servlet-name>searchServlet</servlet-name>
   	<url-pattern>/searchMedia</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>registerServlet</servlet-name>
+  	<url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>evaluateServlet</servlet-name>
+  	<url-pattern>/commentMedia</url-pattern>
   </servlet-mapping>
 </web-app>

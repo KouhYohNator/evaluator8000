@@ -1,15 +1,18 @@
 package fr.upmc.aar.evaluator8000.business;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Media {
 	
-	private int id;
-	private String title;
-	private String genre;
-	private double score;
-	private Date release;
-	private boolean completed;
+	protected int id;
+	protected String title;
+	protected String genre;
+	protected double score;
+	protected Date release;
+	protected boolean completed;
+	protected Set<Comment> comments = new HashSet<Comment>(0);
 	
 	public int getId() {
 		return id;
@@ -32,7 +35,7 @@ public abstract class Media {
 	public double getScore() {
 		return score;
 	}
-	public void setScore(double score) {
+	public void setScore(double score) { 
 		this.score = score;
 	}
 	public Date getRelease() {
@@ -47,9 +50,15 @@ public abstract class Media {
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 	@Override
 	public String toString() {
-		return "Media [title=" + title + ", genre=" + genre + 
-				", score=" + score + ", release=" + release + "]";
+		return "Media [id= " + id + ", title=" + title + ", genre=" + genre + 
+				", score=" + score + ", release=" + release + ", comments" + comments + "]";
 	}
 }
