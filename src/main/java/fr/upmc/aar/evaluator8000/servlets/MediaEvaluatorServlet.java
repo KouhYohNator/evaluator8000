@@ -91,6 +91,11 @@ public class MediaEvaluatorServlet extends HttpServlet {
 						foundComment.setScore(score);
 
 						persistence.saveComment(foundComment);
+						foundGame.setScore(
+								(foundGame.getScore()+foundComment.getScore())/foundGame.getComments().size()
+								);
+						persistence.saveGame(foundGame);
+						persistence.refreshMedia(foundGame);
 
 						resp.getWriter().print("<html><body><h3>Commentaire enregistré</h3><br />");
 						resp.getWriter().print("<p>" + foundComment.toString() + "</p>");
@@ -146,6 +151,11 @@ public class MediaEvaluatorServlet extends HttpServlet {
 						foundComment.setScore(score);
 
 						persistence.saveComment(foundComment);
+						foundMovie.setScore(
+								(foundMovie.getScore()+foundComment.getScore())/foundMovie.getComments().size()
+								);
+						persistence.saveMovie(foundMovie);
+						persistence.refreshMedia(foundMovie);
 
 						resp.getWriter().print("<html><body><h3>Commentaire enregistré</h3><br />");
 						resp.getWriter().print("<p>" + foundComment.toString() + "</p>");

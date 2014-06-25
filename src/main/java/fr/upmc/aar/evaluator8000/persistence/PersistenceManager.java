@@ -259,7 +259,18 @@ public class PersistenceManager {
 		
 		session.saveOrUpdate(comment);
 		
+		
 		tx.commit();
+		session.flush();
+	}
+	
+	/**
+	 * Rafraichit la session avec le media souhaité
+	 * @param media Le media à rafraichir dans la session
+	 */
+	public void refreshMedia (Media media)
+	{
+		session.refresh(media);
 		session.flush();
 	}
 	

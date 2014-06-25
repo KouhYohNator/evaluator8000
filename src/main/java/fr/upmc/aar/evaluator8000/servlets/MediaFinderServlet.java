@@ -75,6 +75,8 @@ public class MediaFinderServlet extends HttpServlet {
 					
 					persistence.saveGame(foundGame);
 				}
+				
+				persistence.refreshMedia(foundGame);
 
 				resp.getWriter().print("<html><body><p>");
 				resp.getWriter().print(foundGame.toString());
@@ -101,13 +103,14 @@ public class MediaFinderServlet extends HttpServlet {
 
 				Movie foundMovie = persistence.findMovie(title);
 
-				if(foundMovie == null || !foundMovie.isCompleted())
+				if(foundMovie == null)
 				{
 					try {
 						foundMovie = connector.findMovie(title);
 					} catch (UnirestException e) { e.printStackTrace(); }
 
 					persistence.saveMovie(foundMovie);
+					persistence.refreshMedia(foundMovie);
 				}
 
 				resp.getWriter().print("<html><body><p>");
