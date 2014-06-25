@@ -41,10 +41,10 @@ public class PersistenceManager {
 	}
 
 	/**
-	 * Trouver un jeu à partir de son titre et de sa plateforme
+	 * Trouver un jeu Ã  partir de son titre et de sa plateforme
 	 * @param title Le titre du jeu
 	 * @param platform L'identifiant de la platforme
-	 * @return Le jeu trouvé, null si aucun n'est trouvé
+	 * @return Le jeu trouvÃ©, null si aucun n'est trouvÃ©
 	 */
 	public Game findGame(String title, int platform) {
 		Transaction tx = session.beginTransaction();
@@ -66,9 +66,9 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Trouver un film à partir de son titre
+	 * Trouver un film Ã  partir de son titre
 	 * @param title Le titre du film
-	 * @return Le film trouvé, null si aucun n'est trouvé
+	 * @return Le film trouvÃ©, null si aucun n'est trouvÃ©
 	 */
 	public Movie findMovie(String title) {
 		Transaction tx = session.beginTransaction();
@@ -88,9 +88,9 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Trouver un utilisateur à partir de son identifiant
+	 * Trouver un utilisateur Ã  partir de son identifiant
 	 * @param login L'identifiant de l'utilisateur
-	 * @return L'utilisateur trouvé, null si aucun n'est trouvé
+	 * @return L'utilisateur trouvÃ©, null si aucun n'est trouvÃ©
 	 */
 	public User findUser(String login) {
 		Transaction tx = session.beginTransaction();
@@ -111,10 +111,10 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Trouver un commentaire à partir de l'utilisateur et du media
-	 * @param user L'utilisateur qui a commenté
-	 * @param media Le media auquel est attaché le commentaire
-	 * @return Le commentaire trouvé, null si aucun n'est trouvé
+	 * Trouver un commentaire Ã  partir de l'utilisateur et du media
+	 * @param user L'utilisateur qui a commentÃ©
+	 * @param media Le media auquel est attachÃ© le commentaire
+	 * @return Le commentaire trouvÃ©, null si aucun n'est trouvÃ©
 	 */
 	public Comment findComment(User user, Media media) {
 		Transaction tx = session.beginTransaction();
@@ -138,7 +138,7 @@ public class PersistenceManager {
 	/**
 	 * Trouver tous les jeux comportant un titre (ex: The Elder Scrolls)
 	 * @param title Le titre que l'on veut rechercher
-	 * @return La liste des jeux trouvés, null si aucun résultat
+	 * @return La liste des jeux trouvÃ©s, null si aucun rÃ©sultat
 	 */
 	public ArrayList<Game> searchGames(String title) {
 		Transaction tx = session.beginTransaction();
@@ -158,9 +158,9 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Rechercher tous les film ayant le titre passé en paramètre
+	 * Rechercher tous les film ayant le titre passÃ© en paramÃ¨tre
 	 * @param title Le titre que l'on veut rechercher
-	 * @return La liste des films comportant ce titre (peut être un singleton)
+	 * @return La liste des films comportant ce titre (peut Ãªtre un singleton)
 	 */
 	public ArrayList<Movie> searchMovies(String title) {
 		Transaction tx = session.beginTransaction();
@@ -180,8 +180,8 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Enregistrer le jeu passé en paramètre dans la base de données
-	 * @param game Le jeu à auvegarder
+	 * Enregistrer le jeu passÃ© en paramÃ¨tre dans la base de donnÃ©es
+	 * @param game Le jeu Ã  auvegarder
 	 */
 	public void saveGame(Game game) {
 		Transaction tx = session.beginTransaction();
@@ -193,8 +193,8 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Enregistrer le film passé en paramètre dans la base de données
-	 * @param game Le film à auvegarder
+	 * Enregistrer le film passÃ© en paramÃ¨tre dans la base de donnÃ©es
+	 * @param game Le film Ã  auvegarder
 	 */
 	public void saveMovie(Movie movie) {
 		Transaction tx = session.beginTransaction();
@@ -206,8 +206,8 @@ public class PersistenceManager {
 	}
 
 	/**
-	 * Sauvegarder une collection de jeux dans la base de données
-	 * @param games L'ensemble des jeux à sauvegarder
+	 * Sauvegarder une collection de jeux dans la base de donnÃ©es
+	 * @param games L'ensemble des jeux Ã  sauvegarder
 	 */
 	public void saveGames(ArrayList<Game> games) {
 		Transaction tx = session.beginTransaction();
@@ -222,8 +222,8 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Sauvegarder une collection de films dans la base de données
-	 * @param movies L'ensemble des films à sauvegarder
+	 * Sauvegarder une collection de films dans la base de donnÃ©es
+	 * @param movies L'ensemble des films Ã  sauvegarder
 	 */
 	public void saveMovies(ArrayList<Movie> movies) {
 		Transaction tx = session.beginTransaction();
@@ -238,8 +238,8 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Sauvegarder un nouvel utilisateur dans la base de données
-	 * @param user L'utilisateur à enregistrer
+	 * Sauvegarder un nouvel utilisateur dans la base de donnÃ©es
+	 * @param user L'utilisateur Ã  enregistrer
 	 */
 	public void saveUser(User user) {
 		Transaction tx = session.beginTransaction();
@@ -251,8 +251,8 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Sauvegarder un nouvel utilisateur dans la base de données
-	 * @param user L'utilisateur à enregistrer
+	 * Sauvegarder un nouvel utilisateur dans la base de donnÃ©es
+	 * @param user L'utilisateur Ã  enregistrer
 	 */
 	public void saveComment(Comment comment) {
 		Transaction tx = session.beginTransaction();
@@ -265,8 +265,8 @@ public class PersistenceManager {
 	}
 	
 	/**
-	 * Rafraichit la session avec le media souhaité
-	 * @param media Le media à rafraichir dans la session
+	 * Rafraichit la session avec le media souhaitÃ©
+	 * @param media Le media Ã  rafraichir dans la session
 	 */
 	public void refreshMedia (Media media)
 	{

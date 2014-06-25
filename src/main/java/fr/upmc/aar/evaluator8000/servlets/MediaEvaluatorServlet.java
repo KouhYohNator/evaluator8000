@@ -71,6 +71,8 @@ public class MediaEvaluatorServlet extends HttpServlet {
 					try {
 						foundGame = connector.findGame(title, platform);
 					} catch (UnirestException e) { e.printStackTrace(); }
+
+					persistence.saveGame(foundGame);
 				}
 
 				// Recherche de l'utilisateur
@@ -91,9 +93,12 @@ public class MediaEvaluatorServlet extends HttpServlet {
 						foundComment.setScore(score);
 
 						persistence.saveComment(foundComment);
-						foundGame.setScore(
-								(foundGame.getScore()+foundComment.getScore())/foundGame.getComments().size()
-								);
+						
+						foundGame.getComments().add(foundComment);
+						
+						double newScore = (foundGame.getScore()+foundComment.getScore())/foundGame.getComments().size();
+						System.out.println("########## NOUVEAU SCORE = " + newScore + " ##########");
+						foundGame.setScore(newScore);
 						persistence.saveGame(foundGame);
 						persistence.refreshMedia(foundGame);
 
@@ -131,6 +136,8 @@ public class MediaEvaluatorServlet extends HttpServlet {
 					try {
 						foundMovie = connector.findMovie(title);
 					} catch (UnirestException e) { e.printStackTrace(); }
+					
+					persistence.saveMovie(foundMovie);
 				}
 
 				// Recherche de l'utilisateur
@@ -151,9 +158,10 @@ public class MediaEvaluatorServlet extends HttpServlet {
 						foundComment.setScore(score);
 
 						persistence.saveComment(foundComment);
-						foundMovie.setScore(
-								(foundMovie.getScore()+foundComment.getScore())/foundMovie.getComments().size()
-								);
+						
+						foundMovie.getComments().add(foundComment);
+						double newScore = (foundMovie.getScore()+foundComment.getScore())/foundMovie.getComments().size();
+						foundMovie.setScore(newScore);
 						persistence.saveMovie(foundMovie);
 						persistence.refreshMedia(foundMovie);
 
