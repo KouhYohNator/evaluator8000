@@ -44,8 +44,8 @@ public class MediaFinderServlet extends HttpServlet {
 
 		// Compatibilité java 1.6 pour tomcat
 		int mediaType = 0;
-		if(media.equals("game")) mediaType = 1;
-		else if(media.equals("movie")) mediaType = 2;
+		if(media.equals("jeu")) mediaType = 1;
+		else if(media.equals("film")) mediaType = 2;
 
 		switch(mediaType)
 		{

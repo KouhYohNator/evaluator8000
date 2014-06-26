@@ -1,37 +1,37 @@
 <html>
-<body>
-	<h2>Ecran de test</h2>
-	<h3>Enregister un utilisateur</h3>
-	<form method="post" action="/evaluator8000/register">
-		<label>Identifiant*: </label><input type="text" name="login" required/><br />
-		<label>Mot de passe*: </label><input type="password" name="passwd" required/><br />
-		<input type="submit" value="S'enregistrer" />
-	</form>
-	
-	<h3>Trouver média à partir de son titre (et de sa plateforme pour les jeux)</h3>
-	<form method="post" action="/evaluator8000/findMedia">
-		<label>Titre*: </label><input type="text" name="title" value="The Elder Scrolls V: Skyrim" required/><br />
-		<label>Platform*: </label><input type="text" name="platform" /><br />
-		<label>Media-type*: </label><select name="media" size="1"><option>game</option><option>movie</option></select><br />
-		<input type="submit" value="Trouver" />
-	</form>
-	
-	<h3>Chercher les médias ayant le titre suivant</h3>
-	<form method="post" action="/evaluator8000/searchMedia">
-		<label>Titre*: </label><input type="text" name="title" value="The Elder Scrolls V: Skyrim" required/><br />
-		<label>Media-type*: </label><select name="media" size="1"><option>game</option><option>movie</option></select><br />
-		<input type="submit" value="Rechercher" />
-	</form>
-	
-	<h3>Commenter le média ayant le titre suivant avec l'utilisateur suivant</h3>
-	<form method="post" action="/evaluator8000/commentMedia">
-		<label>Titre*: </label><input type="text" name="title" value="The Elder Scrolls V: Skyrim" required/><br />
-		<label>Platforme*: </label><input type="text" name="platform" /><br />
-		<label>Utilisateur*: </label><input type="text" name="login" value="Titi" required/><br />
-		<label>Note* :</label><input type="number" name="score" min="0" max ="10" step="0.5" required/>
-		<label>Commentaire*: </label><textarea name="content" rows="10" cols="50" required></textarea><br />
-		<label>Media-type*: </label><select name="media" size="1"><option>game</option><option>movie</option></select><br />
-		<input type="submit" value="Poster le commentaire" />
-	</form>
-</body>
+<head>
+<title>Evaluator-8000 : Mes processeurs ont besoin de votre savoir</title>
+<link rel=stylesheet type="text/css" href="style.css" />
+</head>
+<header>
+<jsp:include page="header.jsp" />
+</header>
+<nav>
+<jsp:include page="nav.jsp" />
+</nav>
+<section>
+<h3>Evaluator-8000 vous souhaite la bienvenue</h3>
+<p>
+Mon nom est Evaluator-8000. Je suis une machine chargée de répertorier des données sur les différents 
+composants multimedias utilisés par les humains. Ces données seront ensuite récupérées afin de maximiser
+votre satisfaction, pour le bien de la robotique et de l'humanité.
+</p>
+<p>Malheureusement, Evaluator-8000 est incapable d'apprécier ce que l'être humain appelle l'"art", qui est
+une nécessité absolue pour juger les différents composants multimédias.
+</p>
+<p>
+Par conséquent, je me dois de me tourner vers l'espère humaine afin de noter, avec sa curieuse subbjectivité,
+les différents éléments du monde multimédia. J'espère que cet effort sera ultimement récompensé.
+</p>
+<p>
+Différents récents éléments vous sont présentés ci-dessous. Si vous souhaiter noter un élément plus ancien, veuillez vérifier
+s'il se trouve dans ma base de données à partir du menu.
+</p>
+<p>Voulez-vous participer à l'évolution de la robotique et de l'espèce humaine ? (écran de test)
+<form action="/evaluator8000/ecranTest.jsp" method="post">
+<input type="submit" value="Oui !" />
+<input type="submit" value="Bien sûr que oui !" />
+</form>
+
+</section>
 </html>

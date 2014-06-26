@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+
+.SearchForm{
+	
+	align: right;
+}
+.test {
+	
+	height: 100px;
+	background-color: #444444;
+	border-color: #000000;
+	border-width: 2px;
+	box-shadow : 0px 6px 0px black;
+}
+
+.navigation_h{
+	
+	height: 25px;
+	background-color: #333333;
+}
+
+input[type="text"], textarea {
+
+  background-color : #FFFFFF; 
+
+}
+
+h1 {
+	color:#888888;
+	text-align:center;
+	
+}
+
+h3 {
+	
+	color:#888888;
+}
+ul {
+	height : 25px;
+	list-style-type:none;
+ }
+ 
+ul li { 
+	text-decoration:none;
+	padding : 0 0.5em; /* Pour espacer les boutons entre eux */
+}
+
+ul li a:link {
+	
+	color:#888888;
+}
+
+ul li a:visited {
+	
+	color:#FF8888;
+}
+
+ li.gauche{
+	float : left;
+ }
+ 
+ li.droite{
+	float : right;
+ }
